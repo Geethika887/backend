@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .product-card {
+            margin-bottom: 20px;
+            background-color: #f8f9fa; /* Light gray background color */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a shadow */
+        }
+        .product-image {
+            max-width: 100px; 
+            max-height: 100px; 
+            object-fit: cover; 
+        }
+        .button-group {
+            display: flex;
+            justify-content: space-around;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Product List</h1>
+        <a href="/products/new" class="btn btn-primary mb-3">Add Product</a>
+        <div class="row">
+            <% products.forEach(function(product) { %>
+                <div class="col-md-3">
+                    <div class="card product-card">
+                        <div class="card-body">
+                            <% if (product.imagePath) { %>
+                                <img src="/uploads/<%= product.imagePath %>" alt="Product Image" class="card-img-top product-image">
+                            <% } else { %>
+                                <div class="text-center">No Image Available</div>
+                            <% } %>
+                            <h5 class="card-title"><%= product.name %></h5>
+                            <p class="card-text">Price: <%= product.price %></p>
+                            <p class="card-text">Description: <%= product.description %></p>
+                            <p class="card-text">Category: <%= product.category %></p>
+                            <p class="card-text">Type: <%= product.price > 5000 ? "Premium" : "Ordinary" %></p>
+                            <div class="button-group">
+                                <a href="/products/<%= product.id %>/edit" class="btn btn-primary">Edit</a>
+                                <form action="/products/<%= product.id %>?_method=DELETE" method="POST">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+</body>
+</html>
